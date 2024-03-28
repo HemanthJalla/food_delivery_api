@@ -1,18 +1,10 @@
 // services/pricingService.js
 
-const { Pricing } = require('../models');
+const Pricing = require('../models/pricing');
 
-// Function to calculate the delivery price
 async function calculatePrice(organizationId, totalDistance, itemType, zone) {
   try {
-    // Retrieve pricing details based on organization ID, item type, and zone
-    const pricing = await Pricing.findOne({
-      where: {
-        organizationId,
-        zone,
-      },
-    });
-
+    const pricing = await Pricing.findOne({ organizationId, zone });
     if (!pricing) {
       throw new Error('Pricing not found for the provided organization and zone');
     }

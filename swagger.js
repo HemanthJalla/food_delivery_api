@@ -1,9 +1,6 @@
-// swagger.js
-
 const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 
-// Swagger configuration options
 const options = {
   swaggerDefinition: {
     info: {
@@ -13,11 +10,9 @@ const options = {
     },
     basePath: '/',
   },
-  // List of files to be processed by swagger-jsdoc
-  apis: ['./src/routes/*.js'], // Path to the API routes files
+  apis: ['./src/routes/*.js'],
 };
 
-// Initialize Swagger-jsdoc
 const swaggerSpec = swaggerJsdoc(options);
 
 module.exports = {

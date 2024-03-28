@@ -1,21 +1,35 @@
-// index.js
-
 const express = require('express');
-const swagger = require('./swagger');
-const app = express();
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const swaggerUi = require('swagger-ui-express');
+const swaggerJsdoc = require('swagger-jsdoc');
 const pricingRoutes = require('./src/routes/pricingRoutes');
-require('dotenv').config(); // Load environment variables from .env file
-// Middleware
-app.use(express.json());
 
-// Mount pricing routes
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// Middleware
+app.use(bodyParser.json());
+app.use(cors());
+
+// Swagger Configuration
+const swaggerOptions = {
+  swaggerDefinition: {
+    info: {
+      title: 'Food Delivery API',
+      description: 'API documentation for the Food Delivery App',
+      version: '1.0.0',
+    },
+  },
+  apis: ['./src/routes/*.js'],
+};
+const swaggerDocs = swaggerJsdoc(swaggerOptions);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
+// Routes
 app.use('/api/pricing', pricingRoutes);
 
-// Serve Swagger UI
-app.use('/api-docs', swagger.serve, swagger.setup);
-
 // Start the server
-const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

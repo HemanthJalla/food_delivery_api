@@ -1,6 +1,6 @@
-// routes/pricingRoutes.js
-
-// routes/pricingRoutes.js
+const express = require('express');
+const router = express.Router();
+const { calculateDeliveryPrice } = require('../controllers/pricingController');
 
 /**
  * @swagger
@@ -34,13 +34,6 @@
  *                 total_price:
  *                   type: number
  */
-
-
-const express = require('express');
-const router = express.Router();
-const { calculateDeliveryPrice } = require('../controllers/pricingController');
-
-// Route to calculate delivery price
 router.post('/calculate-price', calculateDeliveryPrice);
 
 module.exports = router;
