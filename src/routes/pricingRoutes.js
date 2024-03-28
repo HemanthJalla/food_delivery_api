@@ -7,7 +7,7 @@ const { calculateDeliveryPrice } = require('../controllers/pricingController');
  * /api/pricing/calculate-price:
  *   post:
  *     summary: Calculate delivery price
- *     description: Calculate the delivery price based on provided parameters
+ *     description: Calculates the total price for food delivery based on various factors.
  *     requestBody:
  *       required: true
  *       content:
@@ -15,17 +15,22 @@ const { calculateDeliveryPrice } = require('../controllers/pricingController');
  *           schema:
  *             type: object
  *             properties:
- *               organization_id:
- *                 type: string
- *               total_distance:
- *                 type: number
- *               item_type:
- *                 type: string
  *               zone:
  *                 type: string
+ *                 description: Zone for delivery
+ *               organization_id:
+ *                 type: string
+ *                 description: ID of the organization
+ *               total_distance:
+ *                 type: number
+ *                 format: double
+ *                 description: Total distance for delivery in kilometers
+ *               item_type:
+ *                 type: string
+ *                 description: Type of food item (e.g., "perishable" or "non-perishable")
  *     responses:
  *       200:
- *         description: Successful operation
+ *         description: Successful response
  *         content:
  *           application/json:
  *             schema:
@@ -33,7 +38,14 @@ const { calculateDeliveryPrice } = require('../controllers/pricingController');
  *               properties:
  *                 total_price:
  *                   type: number
+ *                   format: double
+ *                   description: Total price for delivery in euros
+ *       400:
+ *         description: Invalid request format
+ *       500:
+ *         description: Internal server error
  */
+
 router.post('/calculate-price', calculateDeliveryPrice);
 
 module.exports = router;
